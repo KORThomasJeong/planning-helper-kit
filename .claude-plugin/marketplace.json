@@ -1,0 +1,16 @@
+{
+  "name": "planning-helper-kit",
+  "description": "기획 도우미의 6단계 기획(입력·명확화 → PRD → 기능 정리 → 기반 선택 → 화면 설계 → 개발 명세서)을 Claude Code 안에서 끝내고 GitHub 저장소로 올리는 플러그인",
+  "owner": {
+    "name": "AI Innovation",
+    "email": "coffee@sk.com"
+  },
+  "plugins": [
+    {
+      "name": "ph",
+      "source": "./",
+      "description": "기획 도우미 킷 — /ph:start 로 시작해 /ph:next 로 PRD·기능 정리·화면 설계·개발 명세서를 차례로 만든다",
+      "version": "0.2.0"
+    }
+  ]
+}

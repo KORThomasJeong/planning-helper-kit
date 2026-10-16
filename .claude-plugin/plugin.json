@@ -1,0 +1,13 @@
+{
+  "name": "ph",
+  "displayName": "기획 도우미 킷",
+  "description": "기획 도우미를 Claude Code 안에서 — 과제 정의서·요구사항만 넣으면 명확화 질문 → PRD → 기능 정리 → 기반 선택 → 화면 설계 → 개발 명세서까지 /ph:next 로 하나씩 만들고, 일관성 점검 후 GitHub 저장소로 올린다.",
+  "version": "0.2.0",
+  "author": {
+    "name": "AI Innovation",
+    "email": "coffee@sk.com"
+  },
+  "homepage": "https://github.com/KORThomasJeong/planning-helper-kit",
+  "repository": "https://github.com/KORThomasJeong/planning-helper-kit",
+  "license": "UNLICENSED"
+}
