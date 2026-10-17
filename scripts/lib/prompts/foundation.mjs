@@ -1,10 +1,10 @@
-// 자동 생성 — tools/port-from-web.mjs 가 planning-helper/lib/prompts/foundation.ts 에서 타입만 제거했다. 직접 고치지 말 것.
+// 웹 서비스 "기획 도우미"에서 옮겨 온 프롬프트 — 지금은 이 킷이 정본이다. 고친 뒤 `node --test` 로 확인한다.
 // 기반 선택 — 신규 프롬프트(원본에 없음) + 디자인·개발 명세 프롬프트에 붙이는 블록.
-// 서버 전용 모듈을 import 하지 않는다 (scripts/verify-prompts.mjs 가 직접 불러 검사한다).
+// 서버 전용 모듈을 import 하지 않는다.
 import { renderFoundationPrompt } from "../foundation-render.mjs";
 // ─────────────────────────────────────────────────────────────────────────────
 // 1) 디자인·개발 명세 생성: 원본 사용자 프롬프트 끝에 선택된 기반 블록을 붙인다.
-//    선택이 없으면 renderFoundationPrompt 가 "" 를 돌려주므로 원본과 바이트 동일.
+//    선택이 없으면 renderFoundationPrompt 가 "" 를 돌려주므로 원본 프롬프트 그대로.
 //    시스템 프롬프트는 건드리지 않는다.
 // ─────────────────────────────────────────────────────────────────────────────
 export function withFoundation(prompt, catalog, selection, target) {
@@ -13,8 +13,8 @@ export function withFoundation(prompt, catalog, selection, target) {
 // ─────────────────────────────────────────────────────────────────────────────
 // 2) AI 추천 (POST /api/generate/foundation) — JSON 만 출력, 비스트리밍.
 // ─────────────────────────────────────────────────────────────────────────────
-export const SYSTEM = `당신은 사내 개발 표준과 레퍼런스를 잘 아는 시니어 아키텍트입니다.
-서비스 기획 문서(PRD, 기능 정리, 과제 정의서)를 읽고, 사내 "기반 카탈로그"에서 이 서비스에 맞는 기반(운영 환경, 디자인 레퍼런스, 기술 스택, 인증, 표준 모듈, 배포 방식 등)을 골라 추천하세요.
+export const SYSTEM = `당신은 개발 표준과 레퍼런스를 잘 아는 시니어 아키텍트입니다.
+서비스 기획 문서(PRD, 기능 정리, 과제 정의서)를 읽고, "기반 카탈로그"에서 이 서비스에 맞는 기반(운영 환경, 디자인 레퍼런스, 기술 스택, 인증, 배포 방식 등)을 골라 추천하세요.
 
 [입력 형식]
 - 기획 문서는 <document name="..."> 태그로 구획되어 전달됩니다 (prd, feature_spec, task_definition). 아직 없는 문서는 "(아직 없음)"입니다.

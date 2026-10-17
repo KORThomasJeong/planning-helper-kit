@@ -1,8 +1,7 @@
 # CLAUDE.md — planning-helper-kit 유지보수 안내
 
 이 저장소는 Claude Code 플러그인 `ph`(마켓플레이스 `planning-helper-kit`)다. 웹 서비스 **기획 도우미**에서 나온
-6단계 기획 흐름과 프롬프트를 Claude Code 안에서 돌린다. 웹 소스는 이 문서에서 `<웹 저장소 경로>` 로 적는다
-(그 소스를 받아 둔 로컬 폴더 — 없으면 포팅·verify 는 할 수 없고, 엔진·테스트는 그대로 돈다). 설계 계약은 **`docs/CONTRACT.md`** 가 정본이다 — 구조나 CLI 형태를 바꾸면 그 파일부터 고친다.
+6단계 기획 흐름과 프롬프트를 Claude Code 안에서 돌린다. 2026-10-17 부터 웹과 따로 가며, 프롬프트도 이 저장소가 정본이다. 설계 계약은 **`docs/CONTRACT.md`** 가 정본이다 — 구조나 CLI 형태를 바꾸면 그 파일부터 고친다.
 
 ## 구성
 
@@ -11,32 +10,27 @@
 | `.claude-plugin/plugin.json`, `marketplace.json` | 플러그인·마켓플레이스 메타 (버전 두 군데) |
 | `commands/*.md` | `/ph:*` 슬래시 커맨드 — 사용자 대화 흐름 |
 | `scripts/ph.mjs` | 엔진 CLI (init·status·prompt·save·answer·questions·foundation·export) |
-| `scripts/lib/prompts/*.mjs`, `foundation-render.mjs`, `export.mjs` | 웹에서 옮긴 프롬프트·렌더러 (**바이트 동일**) |
+| `scripts/lib/prompts/*.mjs`, `foundation-render.mjs`, `export.mjs` | 프롬프트·렌더러 (웹에서 옮겨 왔고, 지금은 이 저장소가 정본) |
 | `catalog/foundation-catalog.json` | 기반 카탈로그 — 이 저장소에서 관리하는 일반 AWS 기본값 (스냅숏 2026-10-16) |
-| `tools/port-from-web.mjs` | 웹 → `.mjs` 자동 포팅 (타입만 제거) |
-| `tools/verify-prompts.mjs` | 웹과 바이트 동일성 검증 |
 | `tests/*.test.mjs` | 전 과정 테스트 (`node --test`) |
 
 ## 규칙
 
-### 프롬프트는 웹과 바이트 동일
-- `scripts/lib/prompts/*.mjs`·`foundation-render.mjs`·`export.mjs` 를 **손으로 고치지 않는다.**
-  웹 쪽 `lib/prompts/*.ts` 가 바뀌었으면 `node tools/port-from-web.mjs <웹 저장소 경로>` 로 다시 옮긴다.
-- 문구를 바꾸고 싶으면 **웹 저장소에서** 바꾸고(웹 `CLAUDE.md` 6장 "프롬프트" 절차) 여기로 옮긴다. 킷만 다르게 만들지 않는다.
-- 커맨드의 "작성" 절차에 품질·형식 지시를 덧붙이지 않는다. 역할·형식은 system 파일(웹 SYSTEM)이 전부 정한다.
-  웹과 결과가 달라지는 가장 쉬운 길이 이 파일에 "친절하게" 한 줄 보태는 것이다.
+### 프롬프트는 한 곳에서만
+- 문서의 역할·형식·품질 기준은 `scripts/lib/prompts/*.mjs` 의 SYSTEM·userPrompt 가 전부 정한다. 바꾸려면 이 파일들을 직접 고친다.
+- 커맨드의 "작성" 절차에 품질·형식 지시를 덧붙이지 않는다. 같은 규칙이 두 곳에 생기면 어느 쪽이 맞는지 알 수 없게 된다.
+- `foundation-render.mjs` 의 블록 머리(`[선택된 기반 — 표준·레퍼런스]`)는 테스트가 확인한다 — 바꾸면 `tests/flow.test.mjs` 도 같이 고친다.
 
 ### 고친 뒤에는 반드시
 ```sh
-npx -y tsx tools/verify-prompts.mjs <웹 저장소 경로>   # 웹과 바이트 비교 (웹 저장소 checkout + node_modules 필요)
-node --test                                         # 엔진 전 과정 (tests/*.test.mjs)
+node --test   # 엔진 전 과정 (tests/*.test.mjs)
 ```
 `node --test tests/` 는 Node 22 이상에서 디렉터리 인자를 받지 않는다 — 인자 없이 `node --test` 를 쓴다(Node 18·20 에선 둘 다 된다).
-둘 다 통과해야 배포한다(verify 는 웹 저장소 checkout 이 있는 PC 에서만 돈다 — 프롬프트 파일을 건드리지 않은 변경이면 `node --test` 로 충분하다). verify 의 기대값을 바꿔야 한다면 이유를 커밋 메시지에 남긴다.
+통과해야 배포한다. 프롬프트 문구를 바꿨다면 바꾼 이유를 커밋 메시지에 남긴다.
 
 ### 런타임 의존성 0
 - 사용자 PC 에서 `npm install` 없이 돌아야 한다. `scripts/` 는 Node 18 내장 모듈만 쓰는 ESM `.mjs`.
-- `package.json`·`node_modules` 를 만들지 않는다. 개발 도구(tsx, typescript)는 `tools/` 에서 `npx`·웹 저장소 것을 빌려 쓴다.
+- `package.json`·`node_modules` 를 만들지 않는다. 개발 도구가 필요하면 `npx` 로 빌려 쓴다.
 
 ### 커맨드 md
 - 사용자는 IT 비전문 현업 담당자다. 화면에 나가는 말은 쉬운 한국어, 개발 용어는 피한다.
@@ -57,7 +51,7 @@ id 는 엔진이 `<분류 key>/<항목 key>` 로 만든다(노드에 id 를 넣�
 ## 배포
 
 1. `.claude-plugin/plugin.json` 의 `version` 과 `.claude-plugin/marketplace.json` 의 `plugins[0].version` 을 **둘 다** 올린다.
-2. verify·test 통과 확인 → 커밋 → GitHub 의 `main`(기본 브랜치)에 푸시.
+2. `node --test` 통과 확인 → 커밋 → GitHub 의 `main`(기본 브랜치)에 푸시.
 3. 사용자는 `/plugin marketplace update planning-helper-kit` 로 받는다.
 
 저장소: https://github.com/KORThomasJeong/planning-helper-kit (public). 설치는 `/plugin marketplace add KORThomasJeong/planning-helper-kit`.

@@ -1,7 +1,6 @@
-// 자동 생성 — tools/port-from-web.mjs 가 planning-helper/lib/prompts/design.ts 에서 타입만 제거했다. 직접 고치지 말 것.
+// 웹 서비스 "기획 도우미"에서 옮겨 온 프롬프트 — 지금은 이 킷이 정본이다. 고친 뒤 `node --test` 로 확인한다.
 // 4단계: 디자인 명세서 (화면 설계 / IA).
-// SYSTEM 과 userPrompt 는 원본(5dd15d8 app/api/generate/design/route.ts)과 한 글자도 다르면 안 된다.
-// 검증: npx -y tsx scripts/verify-prompts.mjs
+// SYSTEM 과 userPrompt 는 원본(5dd15d8 app/api/generate/design/route.ts)에서 옮겨 왔다.
 export const SYSTEM = `당신은 IT 서비스 정보구조(IA) 설계 전문가입니다.
 아래 PRD와 기능 정리를 바탕으로, 서비스의 화면 구조(Information Architecture)를 표로 설계하세요.
 

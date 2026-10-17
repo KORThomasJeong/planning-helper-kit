@@ -2,7 +2,7 @@
 
 웹 서비스 "기획 도우미"(소스 `<웹 저장소>` — 이 문서에서 웹 소스 checkout 경로를 이렇게 적는다)에서 나온
 6단계 기획 흐름을 **웹 서비스 없이 Claude Code 안에서** 끝내는 설치형 플러그인.
-AI 생성은 Bedrock 이 아니라 **Claude Code 자신(서브에이전트)** 이 한다. 프롬프트 문구는 웹 서비스와 **바이트 동일**.
+AI 생성은 Bedrock 이 아니라 **Claude Code 자신(서브에이전트)** 이 한다. 프롬프트는 웹에서 옮겨 왔고, 2026-10-17 부터 이 저장소가 정본이다(9장).
 
 - 저장소: `https://github.com/KORThomasJeong/planning-helper-kit` (public, 기본 브랜치 `main`)
 - 설치: `/plugin marketplace add KORThomasJeong/planning-helper-kit` (또는 전체 https 주소) → `/plugin install ph@planning-helper-kit`, 업데이트 `/plugin marketplace update planning-helper-kit`
@@ -69,7 +69,7 @@ AI 생성은 Bedrock 이 아니라 **Claude Code 자신(서브에이전트)** �
 
 카탈로그: `catalog/foundation-catalog.json` (이 저장소에서 관리하는 일반 AWS 기본 카탈로그, `{snapshot, source, categories:[...]}`, 각 노드에 id 없음 → 로더가 `id` 를 `<cat>/<item>` 로, category id = key 로 채움. active 는 전부 true). 사용자가 `planning/foundation-catalog.json` 을 두면 그것을 우선 사용.
 
-### 포팅 원본 (반드시 바이트 동일)
+### 포팅 원본 (처음 옮겨 온 곳 — 지금은 동기화하지 않는다, 9장)
 - `<웹 저장소>/lib/prompts/{questions,prd,summary,features,design,dev,consistency,foundation}.ts` → `scripts/lib/prompts/*.mjs` (SYSTEM 문자열과 userPrompt 함수, 타입만 제거)
 - `<웹 저장소>/lib/foundation-render.ts` → `scripts/lib/foundation-render.mjs`
 - `<웹 저장소>/lib/gitlab.ts` 의 `buildExportFiles` → `scripts/lib/export.mjs` (웹 소스 파일 이름 그대로)
@@ -77,9 +77,7 @@ AI 생성은 Bedrock 이 아니라 **Claude Code 자신(서브에이전트)** �
 - consistency 의 foundation 입력 = `renderFoundationMarkdown(catalog, selection)` (웹 라우트 확인 후 동일하게)
 - dev_spec 은 consistency·revise 입력 전에 stripReferences.
 
-검증: `tools/verify-prompts.mjs` — 개발자 PC 에서 `npx -y tsx tools/verify-prompts.mjs <웹 저장소 경로>` 로(웹 저장소 checkout + node_modules 필요)
-웹의 lib/prompts·foundation-render 출력과 플러그인 .mjs 출력을 여러 입력(수정 모드·관리자 페이지·기반 선택 유무)으로 비교. 런타임 의존 아님.
-테스트: `tests/*.test.mjs` (`node --test tests/`), 임시 폴더에서 init→prompt→save→foundation→export 전 과정.
+테스트: `tests/*.test.mjs` (`node --test`), 임시 폴더에서 init→prompt→save→foundation→export 전 과정.
 
 ## 4. 플러그인 셸 (에이전트 B 담당)
 
@@ -100,7 +98,7 @@ AI 생성은 Bedrock 이 아니라 **Claude Code 자신(서브에이전트)** �
     - 강제 push 하지 않는다.
   - `help` — 커맨드 목록과 흐름
 - 생성 절차(모든 단계 공통): `node ph.mjs prompt <step>` → Agent(subagent_type `ph:ph-writer`)에 경로 3개 전달, 출력은 `planning/.work/<step>.gen.txt` → `node ph.mjs save <step> planning/.work/<step>.gen.txt` → status.
-- `README.md` (설치·흐름·커맨드 표·작업 폴더 구조·웹 서비스와의 관계·카탈로그 스냅숏 갱신 방법), `CLAUDE.md` (이 저장소를 고치는 사람용 규칙: 프롬프트 바이트 동일, verify 스크립트, 외부 의존 금지), `.gitignore`.
+- `README.md` (설치·흐름·커맨드 표·작업 폴더 구조·웹 서비스와의 관계·카탈로그 스냅숏 갱신 방법), `CLAUDE.md` (이 저장소를 고치는 사람용 규칙: 프롬프트는 한 곳에서만, 외부 의존 금지), `.gitignore`.
 
 ## 5. 구현 메모 (엔진)
 
@@ -215,5 +213,11 @@ AI 생성은 Bedrock 이 아니라 **Claude Code 자신(서브에이전트)** �
 - `/ph:publish` 는 GitHub 전용(`gh` CLI). 4장·6장의 publish 서술은 GitHub 흐름으로 대체됐다.
 - 기반 카탈로그는 이 저장소가 정본인 일반 AWS 기본 카탈로그(스냅숏 2026-10-16)다. 웹에서 받아 오는 절차는 없다.
   항목 id 는 그대로 `<분류 key>/<항목 key>` — key 를 바꾸면 기존 사용자 선택이 깨진다.
-- 프롬프트 파일(`scripts/lib/prompts/*.mjs`·`foundation-render.mjs`·`export.mjs`)은 이번에 바꾸지 않았다(바이트 동일 규칙 유지).
-  5장에 인용한 `export.mjs` 의 두 줄은 지금 생성된 파일의 문구 그대로다.
+- 프롬프트 파일은 이때 바꾸지 않았다 — 9장에서 정리.
+
+## 9. 변경 (웹과 분리, 2026-10-17)
+
+- 프롬프트 바이트 동일 규칙을 없앴다. `scripts/lib/prompts/*.mjs`·`foundation-render.mjs`·`export.mjs` 는 이 저장소가 정본이고 직접 고친다.
+- `tools/port-from-web.mjs`·`tools/verify-prompts.mjs` 를 지웠다(웹 소스 없이는 돌지 않는다). 3장 "포팅 원본"과 5장 "포팅 방식"은 기록으로만 남긴다.
+- 문구 정리: 기반 추천 SYSTEM·일관성 점검의 "사내", 기반 블록 머리 `[선택된 기반 — 사내 표준·레퍼런스]` → `[선택된 기반 — 표준·레퍼런스]`,
+  "(GitLab 링크)" → "(링크)", 기반 추천 SYSTEM 의 "표준 모듈" 제거, 내보내기 두 줄의 "AI FAB" 제거.

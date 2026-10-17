@@ -10,7 +10,7 @@
       "name": "ph",
       "source": "./",
       "description": "기획 도우미 킷 — /ph:start 로 시작해 /ph:next 로 PRD·기능 정리·화면 설계·개발 명세서를 차례로 만든다",
-      "version": "0.2.0"
+      "version": "0.3.0"
     }
   ]
 }

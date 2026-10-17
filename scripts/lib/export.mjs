@@ -1,4 +1,4 @@
-// 자동 생성 — tools/port-from-web.mjs 가 planning-helper/lib/gitlab.ts (buildExportFiles 구간) 에서 타입만 제거했다. 직접 고치지 말 것.
+// 웹 서비스 "기획 도우미"에서 옮겨 온 프롬프트 — 지금은 이 킷이 정본이다. 고친 뒤 `node --test` 로 확인한다.
 import { stripReferences } from "./prompts/dev.mjs";
 import { renderFoundationMarkdown } from "./foundation-render.mjs";
 const DOCS = [
@@ -35,7 +35,7 @@ export function buildExportFiles(input, catalog) {
         has(foundation) ? foundation : null,
         "---",
         "",
-        "planning-helper-kit 으로 생성 (AI FAB 기획 도우미의 프롬프트를 Claude Code 에서 실행)",
+        "planning-helper-kit 으로 생성 (기획 도우미 프롬프트를 Claude Code 에서 실행)",
         "",
     ]
         .filter((l) => l !== null)
@@ -48,7 +48,7 @@ export function buildExportFiles(input, catalog) {
         const claude = [
             `# ${p.name}`,
             "",
-            "> 이 파일은 planning-helper-kit(AI FAB 기획 도우미 Claude Code 플러그인)으로 만든 개발 안내서입니다.",
+            "> 이 파일은 planning-helper-kit(기획 도우미 Claude Code 플러그인)으로 만든 개발 안내서입니다.",
             "",
             "## 프로젝트 개요",
             "",

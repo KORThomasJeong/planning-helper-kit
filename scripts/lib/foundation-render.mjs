@@ -1,6 +1,6 @@
-// 자동 생성 — tools/port-from-web.mjs 가 planning-helper/lib/foundation-render.ts 에서 타입만 제거했다. 직접 고치지 말 것.
+// 웹 서비스 "기획 도우미"에서 옮겨 온 프롬프트 — 지금은 이 킷이 정본이다. 고친 뒤 `node --test` 로 확인한다.
 // 기반 선택(카탈로그 + 프로젝트 선택)을 글로 만드는 순수 함수들.
-// 서버(프롬프트·GitLab 내보내기)와 브라우저(화면·MD/DOCX 내보내기)가 **같은 함수**를 쓴다 —
+// 프롬프트와 내보내기(README·CLAUDE.md)가 **같은 함수**를 쓴다 —
 // 그래야 AI 가 본 것과 사람이 내려받는 것이 어긋나지 않는다. server-only 를 import 하지 말 것.
 //
 // 원칙: 저장된 문서 본문에는 이 블록을 넣지 않는다. 생성할 때는 AI 입력에, 보여 주거나
@@ -58,7 +58,7 @@ function choiceLabel(p) {
     return opts ? `${p.item.name} — ${opts}` : p.item.name;
 }
 /**
- * 생성 프롬프트의 사용자 메시지 끝에 붙이는 블록. 선택이 없으면 "" (원본 프롬프트와 바이트 동일).
+ * 생성 프롬프트의 사용자 메시지 끝에 붙이는 블록. 선택이 없으면 "" (원본 프롬프트 그대로).
  * 시스템 프롬프트는 건드리지 않는다.
  */
 export function renderFoundationPrompt(catalog, selection, target) {
@@ -72,13 +72,13 @@ export function renderFoundationPrompt(catalog, selection, target) {
         return [head, ...g].join("\n");
     })
         .join("\n");
-    return ("\n\n[선택된 기반 — 사내 표준·레퍼런스]\n" +
+    return ("\n\n[선택된 기반 — 표준·레퍼런스]\n" +
         "이 프로젝트는 아래 기반을 쓰기로 확정했습니다. 문서는 이 선택을 전제로 작성하고, " +
-        "관련 내용을 다루는 곳에 해당 주소(GitLab 링크)를 그대로 적어 참고하도록 지정하세요. " +
+        "관련 내용을 다루는 곳에 해당 주소(링크)를 그대로 적어 참고하도록 지정하세요. " +
         "목록에 없는 다른 기술·디자인을 새로 고르지 마세요.\n" +
         body);
 }
-/** 화면·MD/DOCX·GitLab 내보내기(CLAUDE.md·README)용 마크다운 섹션. 선택이 없으면 "". */
+/** 내보내기(CLAUDE.md·README)용 마크다운 섹션. 선택이 없으면 "". */
 export function renderFoundationMarkdown(catalog, selection, opts = {}) {
     const picks = resolveSelection(catalog, selection);
     if (!picks.length)

@@ -199,7 +199,7 @@ test("전 과정", async (t) => {
   // ── 화면 설계 / 개발 명세 ─────────────────────────────────────────────────
   const dp = h.prompt("design");
   assert.equal(dp.warnings, undefined);
-  assert.ok(dp.userText.includes("\n\n[선택된 기반 — 사내 표준·레퍼런스]\n"));
+  assert.ok(dp.userText.includes("\n\n[선택된 기반 — 표준·레퍼런스]\n"));
   assert.ok(dp.userText.includes("디자인 레퍼런스"));
   assert.ok(!dp.userText.includes("- 백엔드"), "design 블록에는 applies_to=dev 전용 분류가 없다");
   assert.match(h.bad("prompt", "dev").err, /화면 설계\(IA\)를 먼저 생성하세요/);
@@ -209,7 +209,7 @@ test("전 과정", async (t) => {
 
   const vp = h.prompt("dev");
   assert.ok(vp.userText.includes("[관리자 페이지 포함 요청]"));
-  assert.ok(vp.userText.includes("[선택된 기반 — 사내 표준·레퍼런스]"));
+  assert.ok(vp.userText.includes("[선택된 기반 — 표준·레퍼런스]"));
   assert.ok(vp.userText.includes("Next.js") || vp.userText.includes("nextjs"));
   h.put(
     "planning/.work/dev.gen.txt",

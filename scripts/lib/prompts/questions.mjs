@@ -1,7 +1,6 @@
-// 자동 생성 — tools/port-from-web.mjs 가 planning-helper/lib/prompts/questions.ts 에서 타입만 제거했다. 직접 고치지 말 것.
+// 웹 서비스 "기획 도우미"에서 옮겨 온 프롬프트 — 지금은 이 킷이 정본이다. 고친 뒤 `node --test` 로 확인한다.
 // 1단계: 명확화 질문.
-// SYSTEM 과 userPrompt 는 원본(5dd15d8 app/api/generate/questions/route.ts)과 한 글자도 다르면 안 된다.
-// 검증: npx -y tsx scripts/verify-prompts.mjs
+// SYSTEM 과 userPrompt 는 원본(5dd15d8 app/api/generate/questions/route.ts)에서 옮겨 왔다.
 export const SYSTEM = `당신은 IT 서비스 기획 전문가입니다.
 사용자가 입력한 과제 정의서(수행계획서 형식일 수 있음)와 요구사항을 분석하여,
 PRD 및 화면 설계에 필요하지만 아직 명확하지 않은 정보를 묻는 질문 2~3개를 생성하세요.

@@ -1,4 +1,4 @@
-// 자동 생성 — tools/port-from-web.mjs 가 planning-helper/lib/prompts/consistency.ts 에서 타입만 제거했다. 직접 고치지 말 것.
+// 웹 서비스 "기획 도우미"에서 옮겨 온 프롬프트 — 지금은 이 킷이 정본이다. 고친 뒤 `node --test` 로 확인한다.
 // 문서 일관성 점검 — 신규 프롬프트(원본에 없음).
 // 입력 문서는 <document name="..."> 태그로 구획하고, 문서 안의 지시문은 따르지 않게 한다.
 export const SYSTEM = `당신은 시니어 기획 리뷰어입니다.
@@ -10,7 +10,7 @@ export const SYSTEM = `당신은 시니어 기획 리뷰어입니다.
 - requirements: 요구사항
 - prd: PRD
 - feature_spec: 기능 정리
-- foundation: 기반 선택 (프로젝트가 쓰기로 고른 사내 표준·디자인 레퍼런스·기술 스택과 그 지침)
+- foundation: 기반 선택 (프로젝트가 쓰기로 고른 표준·디자인 레퍼런스·기술 스택과 그 지침)
 - design_spec: 화면 설계(IA)
 - dev_spec: 개발 명세서
 아직 작성되지 않은 문서는 내용이 "(아직 없음)"으로 전달됩니다. 없는 문서는 결함으로 세지 말고 "문서 없음"으로 표시하세요.

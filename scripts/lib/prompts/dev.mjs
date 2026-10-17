@@ -1,8 +1,7 @@
-// 자동 생성 — tools/port-from-web.mjs 가 planning-helper/lib/prompts/dev.ts 에서 타입만 제거했다. 직접 고치지 말 것.
+// 웹 서비스 "기획 도우미"에서 옮겨 온 프롬프트 — 지금은 이 킷이 정본이다. 고친 뒤 `node --test` 로 확인한다.
 // 5단계: 개발 명세서.
-// SYSTEM 과 생성 모드 userPrompt 는 원본(5dd15d8 app/api/generate/dev/route.ts)과 한 글자도 다르면 안 된다.
+// SYSTEM 과 생성 모드 userPrompt 는 원본(5dd15d8 app/api/generate/dev/route.ts)에서 옮겨 왔다.
 // 수정 모드는 원본에 없던 것(신규) — prd 의 수정 템플릿과 같은 형태로 만들었다.
-// 검증: npx -y tsx scripts/verify-prompts.mjs
 export const SYSTEM = `당신은 시니어 풀스택 개발자입니다.
 아래 PRD, 기능 정리, 화면 설계(IA)를 바탕으로 Claude Code 또는 AI Studio에 전달할 개발 요청 프롬프트를 작성하세요.
 이 문서는 AI에게 서비스 개발을 직접 요청하는 프롬프트입니다.

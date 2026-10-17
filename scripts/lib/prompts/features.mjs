@@ -1,7 +1,6 @@
-// 자동 생성 — tools/port-from-web.mjs 가 planning-helper/lib/prompts/features.ts 에서 타입만 제거했다. 직접 고치지 말 것.
+// 웹 서비스 "기획 도우미"에서 옮겨 온 프롬프트 — 지금은 이 킷이 정본이다. 고친 뒤 `node --test` 로 확인한다.
 // 3단계: 기능 정리 (mermaid 시퀀스 다이어그램 포함).
-// SYSTEM 과 userPrompt 는 원본(5dd15d8 app/api/generate/features/route.ts)과 한 글자도 다르면 안 된다.
-// 검증: npx -y tsx scripts/verify-prompts.mjs
+// SYSTEM 과 userPrompt 는 원본(5dd15d8 app/api/generate/features/route.ts)에서 옮겨 왔다.
 export const SYSTEM = `당신은 IT 서비스 기획 전문가입니다.
 아래 PRD를 바탕으로 이 서비스가 제공해야 할 기능을 정리하세요.
 
