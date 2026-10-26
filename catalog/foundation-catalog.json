@@ -1,0 +1,538 @@
+{
+  "snapshot": "2026-10-16",
+  "source": "planning-helper-kit 기본 카탈로그 (일반 AWS 환경)",
+  "categories": [
+    {
+      "key": "env",
+      "name": "운영 환경",
+      "description": "모든 프로젝트에 깔리는 AWS 공통 전제",
+      "select_mode": "multi",
+      "required": true,
+      "max_select": null,
+      "applies_to": [
+        "design",
+        "dev"
+      ],
+      "sort": 10,
+      "items": [
+        {
+          "key": "aws-baseline",
+          "name": "AWS 공통 전제",
+          "description": "ap-northeast-2, GitHub + GitHub Actions(OIDC), IaC, 최소 권한 IAM",
+          "url": "https://docs.aws.amazon.com/wellarchitected/",
+          "guidance": "- 리전은 ap-northeast-2(서울).\n- 소스는 GitHub 저장소에 두고, 빌드·배포는 GitHub Actions 로 한다. AWS 접근은 OIDC 로 IAM 역할을 assume 한다 — 장기 액세스 키를 저장소·Secrets 에 두지 않는다.\n- 인프라는 IaC(AWS CDK 또는 Terraform)로 정의한다. 콘솔에서 손으로 만든 리소스에 의존하지 않는다.\n- 비밀값은 코드·저장소·S3 에 두지 않고 Secrets Manager 또는 SSM Parameter Store(SecureString)에 둔다.\n- 로그·지표는 CloudWatch(Logs·Metrics·Alarms)로 모은다.\n- 컨테이너 이미지는 ECR 에 push 한다.\n- IAM 은 최소 권한. 서비스별 역할을 나누고 와일드카드(*) 권한을 피한다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": true,
+          "sort": 10,
+          "options": []
+        }
+      ]
+    },
+    {
+      "key": "design",
+      "name": "디자인 레퍼런스",
+      "description": "화면 디자인 언어. 번호(프리셋)로 고른다",
+      "select_mode": "single",
+      "required": false,
+      "max_select": null,
+      "applies_to": [
+        "design",
+        "dev"
+      ],
+      "sort": 20,
+      "items": [
+        {
+          "key": "design-lookbook",
+          "name": "design-lookbook (범용 룩북)",
+          "description": "번호 기반 디자인 컨셉 16종. 변형은 3-a, 3-b 형식",
+          "url": "https://github.com/KORThomasJeong/design-lookbook",
+          "guidance": "화면은 design-lookbook 프리셋 {option} 의 디자인 언어로 만든다. 구현 전에 아래 파일을 읽고 토큰·컴포넌트·금지 규칙을 그대로 따른다.\n  - https://raw.githubusercontent.com/KORThomasJeong/design-lookbook/master/presets/{option}/SPEC.md\n  - https://raw.githubusercontent.com/KORThomasJeong/design-lookbook/master/presets/{option}/tokens.css\n  - 목록: https://raw.githubusercontent.com/KORThomasJeong/design-lookbook/master/presets/INDEX.md",
+          "option_mode": "single",
+          "option_required": true,
+          "option_label": "프리셋",
+          "is_default": false,
+          "sort": 10,
+          "options": [
+            {
+              "key": "1-frost",
+              "label": "1 Frost",
+              "description": "Fluent풍 — 프로덕티비티/협업 툴",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 1
+            },
+            {
+              "key": "2-steel",
+              "label": "2 Steel",
+              "description": "Carbon풍 — 엔터프라이즈 데이터 콘솔",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 2
+            },
+            {
+              "key": "3-jelly",
+              "label": "3 Jelly",
+              "description": "토스풍 — 모바일 핀테크/커머스",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 3
+            },
+            {
+              "key": "4-obsidian",
+              "label": "4 Obsidian",
+              "description": "Linear/Vercel풍 — 다크 모던 SaaS",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 4
+            },
+            {
+              "key": "5-clay",
+              "label": "5 Clay",
+              "description": "머티리얼풍 — 톤 팔레트 소비자 앱",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 5
+            },
+            {
+              "key": "6-glass",
+              "label": "6 Glass",
+              "description": "iOS풍 — 반투명 유리감 소비자 앱",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 6
+            },
+            {
+              "key": "7-quartz",
+              "label": "7 Quartz",
+              "description": "앤트풍 — 정보 밀도 높은 B2B 관리자 콘솔",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 7
+            },
+            {
+              "key": "8-canvas",
+              "label": "8 Canvas",
+              "description": "폴라리스풍 — 커머스 어드민/백오피스",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 8
+            },
+            {
+              "key": "9-prism",
+              "label": "9 Prism",
+              "description": "스펙트럼풍 — 다크 크리에이티브 툴",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 9
+            },
+            {
+              "key": "10-slate",
+              "label": "10 Slate",
+              "description": "깃허브풍 — 개발자 협업/코드 호스팅",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 10
+            },
+            {
+              "key": "11-asphalt",
+              "label": "11 Asphalt",
+              "description": "우버풍 — 흑백 대비 모빌리티 서비스",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 11
+            },
+            {
+              "key": "12-ink",
+              "label": "12 Ink",
+              "description": "스트라이프풍 — 핀테크 결제 대시보드",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 12
+            },
+            {
+              "key": "13-coral",
+              "label": "13 Coral",
+              "description": "에어비앤비풍 — 사진 중심 여행/숙박",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 13
+            },
+            {
+              "key": "14-enamel",
+              "label": "14 Enamel",
+              "description": "배민풍 — 뉴트로 감성 대중 배달앱",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 14
+            },
+            {
+              "key": "15-amber",
+              "label": "15 Amber",
+              "description": "카카오풍 — 노란 포인트 대중 메신저",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 15
+            },
+            {
+              "key": "16-jade",
+              "label": "16 Jade",
+              "description": "네이버풍 — 검색 중심 대중 포털",
+              "url": null,
+              "guidance": null,
+              "is_default": false,
+              "sort": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "frontend",
+      "name": "프론트엔드",
+      "description": "",
+      "select_mode": "single",
+      "required": true,
+      "max_select": null,
+      "applies_to": [
+        "dev"
+      ],
+      "sort": 30,
+      "items": [
+        {
+          "key": "nextjs",
+          "name": "Next.js (App Router) + TypeScript",
+          "description": "서버 렌더링·API 를 한 앱에서. 서브경로 배포면 basePath 를 쓴다",
+          "url": null,
+          "guidance": "프론트엔드는 Next.js App Router + TypeScript. 서브경로(예: /<서비스명>)로 배포하면 next.config 의 basePath 를 쓰고, fetch(\"/api/...\") 같은 절대경로 호출에 접두사를 붙이는 헬퍼를 둔다. 외부 폰트·CDN 대신 번들 포함.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": true,
+          "sort": 10,
+          "options": []
+        },
+        {
+          "key": "react-vite",
+          "name": "React + Vite (SPA)",
+          "description": "정적 빌드 — S3 + CloudFront 정적 서빙에 적합",
+          "url": null,
+          "guidance": "프론트엔드는 React + Vite SPA(TypeScript). 정적 빌드 결과를 배포하고, API 호출 기준 URL 은 환경변수로 받는다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 20,
+          "options": []
+        },
+        {
+          "key": "none",
+          "name": "화면 없음 (API·배치 전용)",
+          "description": null,
+          "url": null,
+          "guidance": null,
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 30,
+          "options": []
+        }
+      ]
+    },
+    {
+      "key": "backend",
+      "name": "백엔드",
+      "description": "",
+      "select_mode": "single",
+      "required": true,
+      "max_select": null,
+      "applies_to": [
+        "dev"
+      ],
+      "sort": 40,
+      "items": [
+        {
+          "key": "nextjs-route-handlers",
+          "name": "Next.js Route Handlers",
+          "description": "프론트와 한 앱. 소규모 업무 도구에 적합",
+          "url": null,
+          "guidance": "백엔드는 같은 Next.js 앱의 Route Handler(app/api/**). 인증은 서버에서 매 요청 검증하고, 입력은 zod 로 검증한다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": true,
+          "sort": 10,
+          "options": []
+        },
+        {
+          "key": "express",
+          "name": "Node.js Express + PostgreSQL",
+          "description": "범용 Node.js API 서버",
+          "url": null,
+          "guidance": "백엔드는 Node.js Express + PostgreSQL(TypeScript). 입력은 zod 로 검증하고, 응답·에러 형식을 한 곳에서 통일한다. DB 접근은 파라미터 바인딩(쿼리 빌더 또는 ORM)만 쓴다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 20,
+          "options": []
+        },
+        {
+          "key": "fastapi",
+          "name": "Python FastAPI",
+          "description": "데이터·AI 처리 중심",
+          "url": null,
+          "guidance": "백엔드는 Python FastAPI(+ uvicorn). 의존성은 requirements.txt/pyproject 로 고정하고, 입력은 pydantic 모델로 검증한다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 30,
+          "options": []
+        }
+      ]
+    },
+    {
+      "key": "database",
+      "name": "데이터베이스",
+      "description": "",
+      "select_mode": "single",
+      "required": false,
+      "max_select": null,
+      "applies_to": [
+        "dev"
+      ],
+      "sort": 50,
+      "items": [
+        {
+          "key": "rds-postgres",
+          "name": "Amazon RDS for PostgreSQL",
+          "description": "기본값. 관리형 PostgreSQL — Multi-AZ, 자동 백업",
+          "url": null,
+          "guidance": "DB 는 Amazon RDS for PostgreSQL. 프라이빗 서브넷에 두고 보안그룹으로 앱에서만 5432 를 허용한다. 운영은 Multi-AZ, 자동 백업(보존 7일 이상)을 켠다. 자격증명은 Secrets Manager 에 두고 앱은 실행 역할로 읽는다. 로테이션을 켜면 앱이 접속 실패 시 시크릿을 다시 읽도록 만든다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": true,
+          "sort": 10,
+          "options": []
+        },
+        {
+          "key": "dynamodb",
+          "name": "Amazon DynamoDB",
+          "description": "서버리스 키-값·문서 DB. 조회 패턴이 단순할 때",
+          "url": null,
+          "guidance": "DB 는 Amazon DynamoDB(온디맨드 용량). 테이블 설계는 조회 패턴부터 정하고(파티션 키·정렬 키·GSI), 명세에 접근 패턴 표를 적는다. 접근은 IAM 역할로 테이블 단위 최소 권한. 시점 복구(PITR)를 켠다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 20,
+          "options": []
+        },
+        {
+          "key": "none",
+          "name": "DB 없음",
+          "description": null,
+          "url": null,
+          "guidance": null,
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 30,
+          "options": []
+        }
+      ]
+    },
+    {
+      "key": "auth",
+      "name": "인증",
+      "description": "로그인 방식",
+      "select_mode": "single",
+      "required": true,
+      "max_select": null,
+      "applies_to": [
+        "dev"
+      ],
+      "sort": 60,
+      "items": [
+        {
+          "key": "cognito",
+          "name": "Amazon Cognito",
+          "description": "User Pool + Hosted UI(OIDC). 필요하면 외부 IdP 연동",
+          "url": "https://docs.aws.amazon.com/cognito/",
+          "guidance": "로그인은 Amazon Cognito User Pool + Hosted UI(OIDC 인가 코드 + PKCE).\n- 토큰 검증은 서버에서 매 요청 한다(서명·발급자·audience·만료). 프론트에서 받은 값을 그대로 믿지 않는다.\n- 세션은 HttpOnly·Secure·SameSite 쿠키로 준다. 토큰을 localStorage 에 두지 않는다.\n- 역할은 Cognito 그룹으로 나누고 서버에서 권한을 확인한다.\n- 회사 계정 로그인이 필요하면 외부 IdP(SAML·OIDC)를 User Pool 에 연동한다.\n- User Pool·앱 클라이언트는 IaC 로 만든다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": true,
+          "sort": 10,
+          "options": []
+        },
+        {
+          "key": "local-password",
+          "name": "아이디 / 비밀번호",
+          "description": "앱 자체 계정. 외부 로그인 연동 없이 간단히 쓸 때",
+          "url": null,
+          "guidance": "로그인은 앱 자체 아이디/비밀번호 방식이다.\n- 비밀번호는 argon2id(또는 bcrypt cost 12 이상)로 해시해 저장한다. 평문·가역 암호화 저장 금지.\n- 세션은 서버 측 불투명 토큰을 HttpOnly·Secure·SameSite 쿠키로 준다. JWT 를 localStorage 에 두지 않는다.\n- 로그인 실패 잠금과 레이트리밋, CSRF 방어를 넣는다(OWASP Authentication Cheat Sheet 참고).\n- 초기 관리자 계정·비밀번호는 코드나 저장소에 두지 않고 배포 시 Secrets Manager 또는 SSM Parameter Store(SecureString)에서 주입한다.\n- 비밀번호 변경·관리자 초기화 화면을 포함한다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 20,
+          "options": []
+        },
+        {
+          "key": "none",
+          "name": "인증 없음 (공개)",
+          "description": null,
+          "url": null,
+          "guidance": null,
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 30,
+          "options": []
+        }
+      ]
+    },
+    {
+      "key": "deploy",
+      "name": "배포",
+      "description": "",
+      "select_mode": "single",
+      "required": true,
+      "max_select": null,
+      "applies_to": [
+        "dev"
+      ],
+      "sort": 80,
+      "items": [
+        {
+          "key": "ecs-fargate",
+          "name": "ECS Fargate",
+          "description": "기본값. 컨테이너 서비스 — ECR 이미지, ALB, 오토스케일링",
+          "url": null,
+          "guidance": "배포는 ECS Fargate(ARM64 권장). 이미지는 GitHub Actions 에서 빌드해 ECR 에 push 하고, ALB(HTTPS, ACM 인증서) 뒤에 서비스를 둔다. 태스크는 프라이빗 서브넷, 보안그룹은 ALB 에서만 허용한다. 비밀값은 태스크 정의 secrets 로 Secrets Manager 또는 SSM Parameter Store 에서 주입한다. CPU·메모리 기준 오토스케일링, 헬스체크 경로를 둔다. 로그는 CloudWatch Logs.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": true,
+          "sort": 10,
+          "options": []
+        },
+        {
+          "key": "app-runner",
+          "name": "AWS App Runner",
+          "description": "소규모 컨테이너 웹앱 — 간단 배포",
+          "url": null,
+          "guidance": "배포는 AWS App Runner. ECR 이미지로 서비스를 만들고 자동 배포를 켠다. 비밀값은 Secrets Manager 또는 SSM Parameter Store 참조로 주입한다. RDS 등 VPC 안 리소스에 붙으면 VPC 커넥터를 둔다. 로그는 CloudWatch Logs.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 20,
+          "options": []
+        },
+        {
+          "key": "s3-cloudfront",
+          "name": "S3 + CloudFront (정적)",
+          "description": "정적 사이트 전용 — 서버 코드·DB 없음",
+          "url": null,
+          "guidance": "배포는 S3 + CloudFront(정적 사이트만). 빌드 결과를 비공개 S3 버킷에 올리고 CloudFront OAC 로만 읽게 한다. SPA 면 403/404 를 index.html 로 돌린다. 배포 후 CloudFront 무효화를 건다. 서버 코드·DB 는 쓸 수 없다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 30,
+          "options": []
+        }
+      ]
+    },
+    {
+      "key": "ai",
+      "name": "AI",
+      "description": "",
+      "select_mode": "multi",
+      "required": false,
+      "max_select": null,
+      "applies_to": [
+        "dev"
+      ],
+      "sort": 90,
+      "items": [
+        {
+          "key": "bedrock-claude",
+          "name": "Amazon Bedrock Claude (권장)",
+          "description": "IAM 역할로 호출, API 키 없음",
+          "url": null,
+          "guidance": "AI 호출은 Amazon Bedrock. IAM 역할로 호출(API 키 없음), 프라이빗 서브넷이면 bedrock-runtime VPC 엔드포인트를 둔다. 모델 global.anthropic.claude-sonnet-5-5, thinking 은 {type:\"between_tools\"}. TypeScript 는 @anthropic-ai/bedrock-sdk, Python 은 anthropic[bedrock]. 새 모델은 계정에서 Bedrock 모델 약관을 먼저 수락해야 한다.",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 10,
+          "options": []
+        },
+        {
+          "key": "anthropic-api",
+          "name": "Anthropic API (외부)",
+          "description": "api.anthropic.com 직접 호출 — API 키는 Secrets Manager",
+          "url": "https://docs.anthropic.com",
+          "guidance": "AI 호출은 Anthropic API(https://api.anthropic.com) 직접 호출. SDK 는 @anthropic-ai/sdk(TypeScript) 또는 anthropic(Python), 모델 ID 는 공식 문서의 최신 값을 쓴다.\n- 외부 API 다: 사용자 입력이 AWS 밖으로 나가므로 데이터 외부 전송이 괜찮은지 검토한다. 서버에서 나가는 경로(NAT 게이트웨이 등)를 확인한다.\n- API 키는 Secrets Manager 에 보관한다. 코드·저장소·브라우저 번들에 넣지 않는다(서버에서만 호출).",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 20,
+          "options": []
+        },
+        {
+          "key": "openai-api",
+          "name": "OpenAI API (외부)",
+          "description": "api.openai.com — API 키는 Secrets Manager",
+          "url": "https://platform.openai.com/docs",
+          "guidance": "AI 호출은 OpenAI API(https://api.openai.com) 직접 호출. 공식 SDK(openai) 를 쓰고 모델 ID 는 공식 문서의 최신 값을 쓴다.\n- 외부 API 다: 사용자 입력이 AWS 밖으로 나가므로 데이터 외부 전송이 괜찮은지 검토한다. 서버에서 나가는 경로(NAT 게이트웨이 등)를 확인한다.\n- API 키는 Secrets Manager 에 보관한다. 코드·저장소·브라우저 번들에 넣지 않는다(서버에서만 호출).",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 30,
+          "options": []
+        },
+        {
+          "key": "google-gemini-api",
+          "name": "Google Gemini API (외부)",
+          "description": "generativelanguage.googleapis.com — API 키는 Secrets Manager",
+          "url": "https://ai.google.dev/gemini-api/docs",
+          "guidance": "AI 호출은 Google Gemini API(https://generativelanguage.googleapis.com) 직접 호출. 공식 SDK(@google/genai 또는 google-genai) 를 쓰고 모델 ID 는 공식 문서의 최신 값을 쓴다.\n- 외부 API 다: 사용자 입력이 AWS 밖으로 나가므로 데이터 외부 전송이 괜찮은지 검토한다. 서버에서 나가는 경로(NAT 게이트웨이 등)를 확인한다.\n- API 키는 Secrets Manager 에 보관한다. 코드·저장소·브라우저 번들에 넣지 않는다(서버에서만 호출).",
+          "option_mode": "none",
+          "option_required": false,
+          "option_label": null,
+          "is_default": false,
+          "sort": 40,
+          "options": []
+        }
+      ]
+    }
+  ]
+}
